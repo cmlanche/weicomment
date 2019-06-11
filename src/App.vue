@@ -119,10 +119,12 @@ export default {
 
   .footer {
     border-top: 1px solid #DEDEDE;
-    color: gray;
+    
     text-align: right;
 
-    text-decoration: none;
+    a {
+      color: gray;
+    }
   }
 
   .header {
