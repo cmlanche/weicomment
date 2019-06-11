@@ -20,8 +20,7 @@
           <span class="time">
             {{item.created_at}}
           </span>
-          <div class="text">
-            {{item.text}}
+          <div class="text" :html="text">
           </div>
         </div>
         <div class="footer">
@@ -67,7 +66,7 @@ export default {
         try {
           weiCommentId = document.querySelector('[data-weicomment-id]').getAttribute('data-weicomment-id');
         } catch(e) {}
-        
+
         if (weiCommentId) {
           this.weiboId = weiCommentId;
         } else {
