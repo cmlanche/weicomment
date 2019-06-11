@@ -62,8 +62,12 @@ export default {
     async viewHandler(e) {
       if (e.type === 'enter' && !this.rendered) {
         this.rendered = true;
+        let weiCommentId;
 
-        const weiCommentId = document.querySelector('[data-weicomment-id]').getAttribute('data-weicomment-id');
+        try {
+          weiCommentId = document.querySelector('[data-weicomment-id]').getAttribute('data-weicomment-id');
+        } catch(e) {}
+        
         if (weiCommentId) {
           this.weiboId = weiCommentId;
         } else {
@@ -73,7 +77,7 @@ export default {
 
         const res = await fetch(`https://cors-anywhere.herokuapp.com/https://m.weibo.cn/comments/hotflow?id=${weiCommentId}&mid=${weiCommentId}&max_id_type=0`)
         const json = await res.json();
-        this.commentsData = json.data.data.concat(json.data.data).concat(json.data.data).concat(json.data.data).concat(json.data.data).concat(json.data.data).concat(json.data.data);
+        this.commentsData = json.data.data;
       }
     }
   }
