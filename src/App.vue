@@ -20,7 +20,7 @@
           <span class="time">
             {{item.created_at}}
           </span>
-          <div class="text" :html="text">
+          <div class="text" v-html="item.text">
           </div>
         </div>
         <div class="footer">
@@ -34,6 +34,7 @@
 
 <script>
 import dayjs from 'dayjs';
+// eslint-disable-next-line
 
 export default {
   name: 'app',
@@ -58,21 +59,22 @@ export default {
   components: {
   },
   methods: {
-    async viewHandler(e) {
-      if (e.type === 'enter' && !this.rendered) {
+    async viewHandler() {
+      if (!this.rendered) {
         this.rendered = true;
         let weiCommentId;
 
         try {
           weiCommentId = document.querySelector('[data-weicomment-id]').getAttribute('data-weicomment-id');
-        } catch(e) {}
+        } catch(e) {
+          // pass
+        }
 
         if (weiCommentId) {
           this.weiboId = weiCommentId;
         } else {
           this.enabled = false;
         }
-        
 
         const res = await fetch(`https://cors-anywhere.herokuapp.com/https://m.weibo.cn/comments/hotflow?id=${weiCommentId}&mid=${weiCommentId}&max_id_type=0`)
         const json = await res.json();
