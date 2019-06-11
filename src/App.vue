@@ -76,7 +76,8 @@ export default {
           this.enabled = false;
         }
 
-        const res = await fetch(`https://cors-anywhere.herokuapp.com/https://m.weibo.cn/comments/hotflow?id=${weiCommentId}&mid=${weiCommentId}&max_id_type=0`)
+        const weiboAPI = `https://m.weibo.cn/comments/hotflow?id=${weiCommentId}&mid=${weiCommentId}&max_id_type=0`;
+        const res = await fetch(`https://goxcors.appspot.com/cors?method=GET&url=${encodeURIComponent(weiboAPI)}`);
         const json = await res.json();
         this.commentsData = json.data.data;
       }
