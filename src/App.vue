@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="footer">
-          Powered By @WeiComment
+          <a href="https://github.com/xcodebuild/weicomment" target="_black">Powered By @WeiComment</a>
         </div>
       </div>
     </div>
@@ -121,6 +121,8 @@ export default {
     border-top: 1px solid #DEDEDE;
     color: gray;
     text-align: right;
+
+    text-decoration: none;
   }
 
   .header {
