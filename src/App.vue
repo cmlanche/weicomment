@@ -8,8 +8,8 @@
       <div class="list" v-else>
         <div class="header">
           评论 <span class="count">{{comments.length}}</span>
-          <a class="weibo-link" target="_black" :href="'https://m.weibo.cn/detail/' + weiboId">
-            去评论 >
+          <a class="weibo-link" target="_black" :href="weiboURL">
+            去 Weibo 评论 >
           </a>
         </div>
         <div class="comment-item" :key="item.id" v-for="item in comments">
@@ -23,9 +23,21 @@
           <div class="text" v-html="item.text">
           </div>
         </div>
+        
         <div class="footer">
+          <a class="reply" v-on:click="clickReply">
+            回复
+          </a>
           <a href="https://github.com/xcodebuild/weicomment" target="_black">Powered By @WeiComment</a>
         </div>
+      </div>
+
+      <div class="reply-dialog" v-if="showReplyDialog">
+        <div class="container">
+          <div class="close" v-on:click="clickCloseReply">X</div>
+          <iframe :src="weiboURL" style="height: 100%; width: 100%;border:none;"></iframe>
+        </div>
+
       </div>
     </div>
 
@@ -44,6 +56,7 @@ export default {
       commentsData: [],
       weiboId: null,
       enabled: true,
+      showReplyDialog: false,
     }
   },
   computed: {
@@ -54,11 +67,21 @@ export default {
           created_at: dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss')
         }
       });
+    },
+
+    weiboURL() {
+      return 'https://m.weibo.cn/detail/' + this.weiboId;
     }
   },
   components: {
   },
   methods: {
+    async clickReply () {
+      this.showReplyDialog = true;
+    },
+    clickCloseReply () {
+      this.showReplyDialog = false;
+    },
     async viewHandler() {
       if (!this.rendered) {
         this.rendered = true;
@@ -89,8 +112,11 @@ export default {
 
 <style lang="less" scoped>
 .weicomment-container {
-  padding: 10px 20px;
+  padding: 10px 0px;
   position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: content-box;
 
   .list {
   }
@@ -120,8 +146,16 @@ export default {
 
   .footer {
     border-top: 1px solid #DEDEDE;
-    
+    padding-top: 3px;
     text-align: right;
+    position: relative;
+
+    .reply {
+      position: absolute;
+      left: 0px;
+      color: #e6152d;
+      text-decoration: underline;
+    }
 
     a {
       color: gray;
@@ -143,6 +177,32 @@ export default {
       right: 10px;
     }
   }
+}
+
+.reply-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 400px;
+  border: solid 1px gray;
+
+  .container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    .close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      cursor: pointer;
+      background: white;
+      display: inline-block;
+      width: 20px;
+    }
+  }
+
+
 }
 
 .spinner {

@@ -7,8 +7,8 @@ try {
 }
 
 if (weiCommentId) {
-    iframe.src = '//unpkg.com/weicomment/dist/index.html#' + JSON.stringify({id: weiCommentId});
-    iframe.style = 'width: 100%;height: 100%;border: none;min-height: 300px;';
+    iframe.src = '//unpkg.com/weicomment@latest/dist/index.html#' + JSON.stringify({id: weiCommentId});
+    iframe.style = 'width: 100%;height: 100%;border: none;min-height: 500px;';
     
     try {
         document.getElementById('weicomment').appendChild(iframe);
