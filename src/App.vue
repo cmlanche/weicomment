@@ -62,24 +62,25 @@ export default {
     async viewHandler() {
       if (!this.rendered) {
         this.rendered = true;
+        
         let weiCommentId;
-
         try {
-          weiCommentId = document.querySelector('[data-weicomment-id]').getAttribute('data-weicomment-id');
-        } catch(e) {
+          weiCommentId = JSON.parse(decodeURIComponent(location.hash.slice(1))).id;
+        } catch (e) {
           // pass
         }
 
         if (weiCommentId) {
           this.weiboId = weiCommentId;
+
+          const weiboAPI = `https://m.weibo.cn/comments/hotflow?id=${weiCommentId}&mid=${weiCommentId}&max_id_type=0`;
+          const res = await fetch(`https://cors-anywhere.herokuapp.com/${weiboAPI}`);
+          const json = await res.json();
+          this.commentsData = json.data.data;
         } else {
           this.enabled = false;
         }
 
-        const weiboAPI = `https://m.weibo.cn/comments/hotflow?id=${weiCommentId}&mid=${weiCommentId}&max_id_type=0`;
-        const res = await fetch(`https://cors-anywhere.herokuapp.com/${weiboAPI}`);
-        const json = await res.json();
-        this.commentsData = json.data.data;
       }
     }
   }
