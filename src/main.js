@@ -9,5 +9,5 @@ Vue.use(checkView);
 
 new Vue({
   render: h => h(App),
-}).$mount('#weicomment');
+}).$mount('#app');
 
